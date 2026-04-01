@@ -74,6 +74,10 @@ function getCol(data) {
 
 
 
+// code for Actor & Movies data
+
+
+
 
 
 
