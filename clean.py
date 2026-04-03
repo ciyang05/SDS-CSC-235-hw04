@@ -17,6 +17,7 @@ data = pd.read_csv('force data.csv')
 data.dropna()
 data_clean = data.drop_duplicates()
 
+data_clean = data_clean.dropna(subset=['cast'])
 data_clean['main'] = data_clean['cast'].str.split(',').apply(lambda x: [a.strip() for a in x[:3]])
 
 # edges data
