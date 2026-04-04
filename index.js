@@ -78,15 +78,35 @@ function getCol(data) {
 
 // loads and parses data 
 d3.json("graph.json").then(data => {
-    console.log("loading data...");
-    console.log(data);
-    console.log("data was successfully loaded");
+    // console.log(data);
+    // console.log("data was successfully loaded");
+    console.log("nodes: ", data.nodes);
+    console.log("links", data.links);
     drawGraph(data);
 }).catch(error => {
     console.warn("Could not load data:", error);
 });
 
 function drawGraph(data) {
+
+    // dimensions
+    const width = 600;
+    const height = 600;
+
+    const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+
+    const plot_height = height - margin.top - margin.bottom;
+    const plot_width = width - margin.left - margin.right;
+
+    // canvas and plot 
+    const canvas = d3.select("#canvas")
+        .append("svg")
+        .style("background", "aliceblue")
+        .attr("height", height)
+        .attr("width", width);
+
+    const plot = canvas.append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
     // update nodes
     function updateNodes() {
@@ -96,8 +116,8 @@ function drawGraph(data) {
             .attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .attr("r", 10)
-            .style("fill", d => colormap[d.label])
-            .style("stroke", d => d3.color().darker())
+            .style("fill", "#4a90d9")
+            .style("stroke", "#2c5f8a")
             .attr("class", "viz");
     }
 
@@ -141,8 +161,15 @@ function drawGraph(data) {
         .force("center", d3.forceCenter())
         // links between nodes
         // how nodes are linked to each other
-        .force("link", d3.forceLink().links(data.links))
-    on("tick", ticked);
+        .force("link", d3.forceLink().links(data.links).id(d => d.id))
+        .on("tick", ticked);
+
+    // tooltip
+    let tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
 }
 
