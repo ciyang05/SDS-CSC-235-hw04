@@ -2,3 +2,15 @@ line {
     stroke-width: 1px;
     stroke: grey;
 }
+
+.tooltip {
+    position: absolute;
+    background: aliceblue;
+    pointer-events: none;
+    font: 18px sans-serif;
+    border: 1px solid black;
+    width: 150px;
+    height: 25px;
+    padding: 10px;
+    border-radius: 10px;
+}

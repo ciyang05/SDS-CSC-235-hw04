@@ -2,37 +2,43 @@ import pandas as pd
 from itertools import combinations
 import json
 
+# general data cleaning
+
 df = pd.read_csv('copy.csv')
-df = df.dropna()
-df.to_csv('cleaned.csv', index=False)
+print("rows before cleaning:", len(df))
+
+df = df.dropna(subset=['cast', 'title', 'listed_in'])
+print("rows after dropping null values in cast, title, and genres:", len(df))
 
 df = df[df['type'] != 'TV Show']
-df.to_csv('updated.csv', index=False)
+print("rows after dropping TV shows", len(df))
 
 df = df.drop('description', axis=1)
-df.to_csv('final updated.csv', index=False)
+print("rows after dropping description column", len(df))
+
+df = df.drop_duplicates()
+print("rows after drop_duplicates: ", len(df))
+
+# clean data w/all relevant attributes
+df.to_csv('cleaned.csv', index=False)
+
+
 
 # for force directed graph 
-data = pd.read_csv('force data.csv', index_col=0)
+data = pd.read_csv('cleaned.csv')
 print("rows after read: ", len(data))
 
-data = data.dropna()
-print("rows after dropna: ", len(data))
+print("columns: ", data.columns.tolist())
+print(data.head())
 
-data_clean = data.drop_duplicates()
-print("rows after drop_duplicates: ", len(data_clean))
+if data.empty:
+    raise ValueError("data_clean is empty — check your CSV path and that 'cast' column exists")
 
-data_clean = data_clean.dropna(subset=['cast'])
-print("rows after cast dropna: ", len(data_clean))
-
-print("columns: ", data_clean.columns.tolist())
-print(data_clean.head())
-
-data_clean['main'] = data_clean['cast'].str.split(',').apply(lambda x: [a.strip() for a in x[:3]])
+data['main'] = data['cast'].str.split(',').apply(lambda x: [a.strip() for a in x[:3]])
 
 # edges data
 edges = []
-for _, row in data_clean.iterrows():
+for _, row in data.iterrows():
     actors = row['main']
     for actor1, actor2 in combinations(actors, 2):
         edges.append({'source': actor1, 'target': actor2, 'movie': row['title']})
@@ -48,7 +54,7 @@ edges_df = edges_df.groupby(['source', 'target']).agg(
 # nodes data
 nodes = []
 
-for _, row in data_clean.iterrows():
+for _, row in data.iterrows():
     actors = row['main']
     for actor in actors:
         nodes.append(actor)

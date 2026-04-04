@@ -74,7 +74,7 @@ function getCol(data) {
 
 
 
-// code for Actor & Movies data
+// force direct graph
 
 // loads and parses data 
 d3.json("graph.json").then(data => {
@@ -134,8 +134,8 @@ function drawGraph(data) {
 
     // ticked
     function ticked() {
-        updateNodes();
         updateLinks();
+        updateNodes();
 
         plot.selectAll(".viz")
             .on("mouseover", function (e, d) {
@@ -155,13 +155,13 @@ function drawGraph(data) {
     const simulation = d3.forceSimulation(data.nodes)
         // has to do w/charge of individual node
         // pushing nodes apart
-        .force("charge", d3.forceManyBody())
+        .force("charge", d3.forceManyBody().strength(-100))
         // how node reacts to center of plot
         // pulling nodes together
-        .force("center", d3.forceCenter())
+        .force("center", d3.forceCenter(plot_width/2, plot_height/2))
         // links between nodes
         // how nodes are linked to each other
-        .force("link", d3.forceLink().links(data.links).id(d => d.id))
+        .force("link", d3.forceLink().links(data.links).id(d => d.id).distance(75))
         .on("tick", ticked);
 
     // tooltip
