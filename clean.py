@@ -25,6 +25,9 @@ df.to_csv('cleaned.csv', index=False)
 
 
 # for force directed graph 
+# since there are so many actors and movies included in this dataset, to simplify the visualization, 
+# only the 30 most connected actors from the dataset appear
+
 data = pd.read_csv('cleaned.csv')
 print("rows after read: ", len(data))
 
@@ -50,22 +53,26 @@ edges_df = edges_df.groupby(['source', 'target']).agg(
     movies = ('movie', lambda x: list(x))
 ).reset_index()
 
+edges_df = edges_df[edges_df['weight'] >= 1]
+
+top_actors = set(
+    edges_df['source'].value_counts().head(30).index
+).union(
+    edges_df['target'].value_counts().head(30).index
+)
+edges_df = edges_df[edges_df['source'].isin(top_actors) & edges_df['target'].isin(top_actors)]
 
 # nodes data
-nodes = []
-
-for _, row in data.iterrows():
-    actors = row['main']
-    for actor in actors:
-        nodes.append(actor)
-
-# set removes duplicate actors from list
-nodes_df = pd.DataFrame({'id': list(set(nodes))})
+active_actors = set(edges_df['source']).union(set(edges_df['target']))
+nodes_df = pd.DataFrame({'id': list(active_actors)})
 
 # converting to JSON file since it's easier to work with for graph
 # orient='records' converts each row into dictionary 
 nodes_final = nodes_df.to_dict(orient='records')
 edges_final = edges_df.to_dict(orient='records')
+
+print("number of edges: ", len(edges_df))
+print("number of nodes: ", len(nodes_df))
 
 with open('graph.json', 'w') as f:
     json.dump({"nodes": nodes_final, "links": edges_final}, f)

@@ -5,12 +5,34 @@ line {
 
 .tooltip {
     position: absolute;
-    background: aliceblue;
+    background: white;
     pointer-events: none;
-    font: 18px sans-serif;
-    border: 1px solid black;
+    font: 16px Serif;
+    border: 1px solid #2FBCBC;
+    color: #2FBCBC;
     width: 150px;
     height: 25px;
-    padding: 10px;
+    padding: 6px 10px;
     border-radius: 10px;
+}
+
+.force-title {
+    text-anchor: middle;
+    font-size: 25px;
+    font-weight: bold;
+    fill: #2FBCBC;
+}
+
+.body {
+    font-family: sans-serif;
+    margin-left: 2rem;
+}
+
+svg g text.label {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: x-large;
+}
+
+#canvas svg {
+    margin-top: -500px;
 }
