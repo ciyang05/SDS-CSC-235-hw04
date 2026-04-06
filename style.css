@@ -1,26 +1,28 @@
-line {
+/* line {
     stroke-width: 1px;
     stroke: grey;
-}
+} */
 
 .tooltip {
     position: absolute;
     background: white;
     pointer-events: none;
-    font: 16px Serif;
+    font-size: 14px;
+    font-weight: normal;
     border: 1px solid #2FBCBC;
     color: #2FBCBC;
-    width: 150px;
-    height: 25px;
-    padding: 6px 10px;
+    padding: 15px;
     border-radius: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    min-width: 140px;
 }
 
 .force-title {
     text-anchor: middle;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: bold;
     fill: #2FBCBC;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .body {
@@ -29,10 +31,53 @@ line {
 }
 
 svg g text.label {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: x-large;
 }
 
 #canvas svg {
-    margin-top: -500px;
+    line-height: 0;
+    border: 2px solid #2FBCBC;
+    border-radius: 10px;
+}
+
+#title { 
+    color: #2FBCBC;
+    font-size: 35px;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#bullet-title {
+    color: black;
+    font-size: 18px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.main-body {
+    font-size: 16px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#force-graph {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#text-body {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+.graph-title {
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:#2FBCBC;
 }

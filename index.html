@@ -9,8 +9,42 @@
 </head>
 
 <body onload="draw()">
-  <svg id="chart" width="900" height="900"></svg>
-  <div id="canvas"></div>
+  <!--for main title-->
+  <div>
+    <h1 id="title">Correlations Between Netflix Movies</h1>
+  </div>
+
+  <div>
+
+    <p class="main-body">
+
+      <a href="https://www.kaggle.com/datasets/shivamb/netflix-shows">Link to the original dataset</a>
+
+    </p>
+
+  </div>
+
+  <svg id="chart" width="900" height="500"></svg>
+
+  <div id="force-graph">
+    <div id="canvas"></div>
+
+    <div id="text-body">
+      
+      <h4 class="graph-title">Co-Occurance Between Actors in Netflix Movies</h4>
+      <p class="main-body">
+        This visualization shows the co-occurance between actors in Netflix movies. Each node represents an actor, and a link between these actors represents a movie or movies they were both casted in.
+        Due to the nature of the dataset, only 30 of the most connected actors are shown. This means the visualization only depends on a subset of the entire dataset.
+      </p>
+
+      <p id="bullet-title">User Interactions:</p>
+      <ul class="main-body">
+        <li>Hover over a node to see the specific actor and number of connections they have</li>
+        <li>Drag a node to highlight specific connections or see dymanics of graph</li>
+      </ul>
+    </div>
+
+  </div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="index.js"></script>
