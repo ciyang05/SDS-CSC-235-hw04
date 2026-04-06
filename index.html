@@ -8,12 +8,27 @@
   <title>Netflix Movies Visual Analytics System</title>
 </head>
 
+<div
+  id ="info" style = "margin: 20px; font-size: 18 px; color: black; font_weight: bold">
+  <p>Click a cell to see details</p>
+  <p>Hover over any part of the graph to highlight a specific row and column</p>
+</div>
+
+
 <body onload="draw()">
+
+<div id="chart"></div>
   <svg id="chart" width="900" height="900"></svg>
   <div id="canvas"></div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="index.js"></script>
+
+
+
+</div>
 </body>
+
+
 
 </html>

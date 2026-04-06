@@ -36,8 +36,8 @@ function drawMatrix(matrixData, genres){
 
     .domain([0, maxValue]);
     const margin = { top: 150, right: 30, bottom: 30, left: 150};
-    const width = 600;
-    const height = 400;
+    const width = 900;
+    const height = 900;
 
 
 const svg = d3.select("#chart")
@@ -73,14 +73,37 @@ svg.selectAll("rect.cell")
     .attr("y", d => y(d.row))
     .attr("width", x.bandwidth())
     .attr("height", y.bandwidth())
-    .attr("fill", d => color(d.value));
+    .attr("fill", d => color(d.value))
+    .attr("class", "cell")
+    .on("click", function(event, d){
+        d3.select("#info")
+            .text(`${d.row} and ${d.col} appear together ${d.value} times`)
 
-svg.selectAll("title.cell-title")
-    .data(matrixData)
-    .join("title")
-    .text(d => `${d.row} - ${d.col}: ${d.value} `);
+        d3.selectAll("rect.cell")
+            .attr("stroke", null);
+        d3.select(this)
+            .attr("stroke", "red")
+            .attr("stroke-width", 2);
+    
+
+
+    })
+
+    .on("mouseover", function(event, d){
+        d3.selectAll("rect.cell")
+        .attr("opacity", 0.1);
+
+        d3.selectAll("rect.cell")
+            .filter(cell => cell.row === d.row || cell.col === d.col)
+            .attr("opacity", 1);  
+    })
+    .on("mouseout", function(){
+        d3.selectAll("rect.cell")
+        .attr("opacity", 1);
+    });
+
+
 }
-
 
 
 
