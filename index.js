@@ -1,35 +1,120 @@
 
-d3.csv("cleaned.csv")
-    .then(function (data) {
-        const links = getCol(data);
-        const matrixData = links.map(d => ({
-            row: d.source,
-            col: d.target,
-            value: d.value
-        }));
+// d3.csv("cleaned.csv")
+//     .then(function (data) {
+//         const links = getCol(data);
+//         const matrixData = links.map(d => ({
+//             row: d.source,
+//             col: d.target,
+//             value: d.value
+//         }));
 
 
-        const wordToId = new Map();
+//         const wordToId = new Map();
 
-        let index = 0;
+//         let index = 0;
 
-        links.forEach(d => {
-            if (!wordToId.has(d.source)) {
-                wordToId.set(d.source, index++);
-            }
-            if (!wordToId.has(d.target)) {
-                wordToId.set(d.target, index++)
-            }
-        })
+//         links.forEach(d => {
+//             if (!wordToId.has(d.source)) {
+//                 wordToId.set(d.source, index++);
+//             }
+//             if (!wordToId.has(d.target)) {
+//                 wordToId.set(d.target, index++)
+//             }
+//         })
 
-        const numericalGenre = links.map(d => ({
-            source: wordToId.get(d.source),
-            target: wordToId.get(d.target),
-            value: +d.value
-        }));
-        //update(data);
-        console.log(numericalGenre)
+//         const numericalGenre = links.map(d => ({
+//             source: wordToId.get(d.source),
+//             target: wordToId.get(d.target),
+//             value: +d.value
+//         }));
+//         //update(data);
+//         console.log(numericalGenre)
+//     });
+
+d3.json("genreGraph.json").then(function(graph){
+    makeMatrix(graph);
+});
+
+function makeMatrix(graph){
+    const genres = graph.nodes.map(d => d.id).sort();
+
+    const matrixData = [];
+
+    graph.links.forEach(link => {
+        matrixData.push ({
+            row: link.source,
+            col: link.target,
+            value: link.value
+        });
+        matrixData.push ({
+            row: link.source,
+            col: link.target,
+            value: link.value
+        });
     });
+    genres.forEach(g => {
+        matrixData.push({
+            row: g,
+            col: g,
+            value: 0
+        });
+    });
+
+    drawMatrix(matrixData, genres);
+}
+
+function drawMatrix(matrixData, genres){
+    const maxValue = d3.max(matrixData, d => d.value);
+    const color = d3.scaleSequential(d3.interpolateReds)
+    
+    .domain([0, maxValue]);
+    const margin = { top: 150, right: 30, bottom: 30, left: 150};
+    const width = 900;
+    const height = 900;
+
+
+const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+const x = d3.scaleBand()
+    .domain(genres)
+    .range([margin.left, width - margin.right])
+    .padding(.05);
+
+const y = d3.scaleBand()
+    .domain(genres)
+    .range([margin.top, height - margin.bottom])
+    .padding(0.05)
+
+svg.append("g")
+    .attr("transform", `translate(0, ${margin.top})`)
+    .call(d3.axisTop(x))
+    .selectAll("text")
+    .attr("transform", "rotate(-45)")
+    .style("text-anchor", "start");
+
+svg.append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .call(d3.axisLeft(y));
+
+svg.selectAll("rect.cell")
+    .data(matrixData)
+    .join("rect")
+    .attr("x", d => x(d.col))
+    .attr("y", d => y(d.row))
+    .attr("width", x.bandwidth())
+    .attr("height", y.bandwidth())
+    .attr("fill", d => color(d.value));
+
+svg.selectAll("title.cell-title")
+    .data(matrixData)
+    .join("title")
+    .text(d => `${d.row} - ${d.col}: ${d.value} `);
+}
+
+
 
 
 

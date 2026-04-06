@@ -76,3 +76,37 @@ print("number of nodes: ", len(nodes_df))
 
 with open('graph.json', 'w') as f:
     json.dump({"nodes": nodes_final, "links": edges_final}, f)
+
+
+genreEdges = []
+
+for _, row in df.iterrows():
+    genres = [g.strip() for g in row['listed_in'].split(',') if g.strip()]
+
+    for g1, g2 in combinations(sorted(genres), 2):
+        genreEdges.append({
+            'source':g1,
+            'target': g2,
+            'movie': row['title']
+
+        })
+    
+genreEdgesdf = pd.DataFrame(genreEdges)
+
+genreEdgesdf = genreEdgesdf.groupby(['source', 'target']).agg(
+        value = ('movie', 'count')
+        ).reset_index()
+genreNodes = sorted(
+        set(genreEdgesdf['source']).union(set(genreEdgesdf['target']))
+    )
+
+genreNodesdf = pd.DataFrame({'id': genreNodes})
+
+genreNodesfinal = genreNodesdf.to_dict(orient = 'records')
+genreLinksFinal = genreEdgesdf.to_dict(orient = 'records')
+
+print("number of genre edges: ", len(genreEdgesdf))
+print("number of genre nodes:", len(genreNodesdf))
+
+with open('genreGraph.json', 'w') as f:
+        json.dump({"nodes": genreNodesfinal, "links": genreLinksFinal}, f, indent = 2)
