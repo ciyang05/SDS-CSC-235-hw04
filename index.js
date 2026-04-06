@@ -151,13 +151,10 @@ function getCol(data) {
 
 function drawGraph(data) {
 
-    // document.getElementsByTagName("h2")[0].innerHTML = "Correlations Between Actors in Netflix Movies";
-    // document.getElementsByTagName("h3")[0].innerHTML = "";
-
 
     // dimensions
-    const width = 650;
-    const height = 650;
+    const width = 600;
+    const height = 600;
 
     const margin = { top: 10, right: 10, bottom: 10, left: 10 };
 
@@ -167,7 +164,7 @@ function drawGraph(data) {
     // canvas and plot 
     const canvas = d3.select("#canvas")
         .append("svg")
-        .style("background", "#DAF2F0")
+        .style("background", "#FBFBF9")
         .attr("height", height)
         .attr("width", width);
 
@@ -221,7 +218,7 @@ function drawGraph(data) {
                 tooltip.transition().duration(500).style("opacity", 0.9);
 
                 tooltip
-                    .html(`<strong>${d.id}</strong>`)
+                    .html(`<div><strong>${d.id}<br>Connections: ${data.links.filter(l => l.source.id === d.id || l.target.id === d.id).length}</div>`)
                     .style("left", e.pageX + 10 + "px")
                     .style("top", e.pageY - 10 + "px");
             })
@@ -258,7 +255,7 @@ function drawGraph(data) {
         .on("tick", ticked);
 
 
-    // tooltip
+    // tooltip 
     let tooltip = d3
         .select("body")
         .append("div")
