@@ -1,36 +1,3 @@
-
-// d3.csv("cleaned.csv")
-//     .then(function (data) {
-//         const links = getCol(data);
-//         const matrixData = links.map(d => ({
-//             row: d.source,
-//             col: d.target,
-//             value: d.value
-//         }));
-
-
-//         const wordToId = new Map();
-
-//         let index = 0;
-
-//         links.forEach(d => {
-//             if (!wordToId.has(d.source)) {
-//                 wordToId.set(d.source, index++);
-//             }
-//             if (!wordToId.has(d.target)) {
-//                 wordToId.set(d.target, index++)
-//             }
-//         })
-
-//         const numericalGenre = links.map(d => ({
-//             source: wordToId.get(d.source),
-//             target: wordToId.get(d.target),
-//             value: +d.value
-//         }));
-//         //update(data);
-//         console.log(numericalGenre)
-//     });
-
 d3.json("genreGraph.json").then(function(graph){
     makeMatrix(graph);
 });
@@ -66,11 +33,11 @@ function makeMatrix(graph){
 function drawMatrix(matrixData, genres){
     const maxValue = d3.max(matrixData, d => d.value);
     const color = d3.scaleSequential(d3.interpolateReds)
-    
+
     .domain([0, maxValue]);
     const margin = { top: 150, right: 30, bottom: 30, left: 150};
-    const width = 900;
-    const height = 900;
+    const width = 600;
+    const height = 400;
 
 
 const svg = d3.select("#chart")
