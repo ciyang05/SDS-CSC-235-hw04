@@ -14,8 +14,8 @@ function makeMatrix(graph){
             value: link.value
         });
         matrixData.push ({
-            row: link.source,
-            col: link.target,
+            row: link.target,
+            col: link.source,
             value: link.value
         });
     });
@@ -31,20 +31,24 @@ function makeMatrix(graph){
 }
 
 function drawMatrix(matrixData, genres){
-    const maxValue = d3.max(matrixData, d => d.value);
-    const color = d3.scaleSequential(d3.interpolateReds)
 
-    .domain([0, maxValue]);
+
+
+
     const margin = { top: 150, right: 30, bottom: 30, left: 150};
-    const width = 900;
-    const height = 900;
+    const width = 700;
+    const height = 700;
+    const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+    const maxValue = d3.max(matrixData, d => d.value);
 
+    
+    const color = d3.scaleSequential(t => d3.interpolateBlues(0.25 + t * 0.75)
+        ).domain([0,100]).clamp(true);
 
-const svg = d3.select("#chart")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
+    
 const x = d3.scaleBand()
     .domain(genres)
     .range([margin.left, width - margin.right])
@@ -75,8 +79,10 @@ svg.selectAll("rect.cell")
     .attr("height", y.bandwidth())
     .attr("fill", d => color(d.value))
     .attr("class", "cell")
+    .attr("stroke", "#f3e6e0")
+    .attr("stroke-width", 1)
     .on("click", function(event, d){
-        d3.select("#info")
+        d3.select("#detail")
             .text(`${d.row} and ${d.col} appear together ${d.value} times`)
 
         d3.selectAll("rect.cell")
@@ -100,9 +106,15 @@ svg.selectAll("rect.cell")
     .on("mouseout", function(){
         d3.selectAll("rect.cell")
         .attr("opacity", 1);
-    });
+    })
 
-
+    svg.append("text")
+        .attr("x", width/2)
+        .attr("y", 30)
+        .attr("text-anchor", "middle")
+        .style("font-size", "22px")
+        .style("font-weight", "bold")
+        .text("Genre Co-Occurence Matrix");
 }
 
 

@@ -16,7 +16,7 @@
 
   <div>
 
-    <p class="main-body">
+    <p class = "main-body">
 
       <a href="https://www.kaggle.com/datasets/shivamb/netflix-shows">Link to the original dataset</a>
 
@@ -24,11 +24,44 @@
 
   </div>
 
-  <svg id="chart" width="900" height="500"></svg>
-  <div id="info" style="margin: 20px; font-size: 18 px; color: black;">
-    <p>Click a cell to see details</p>
+<div id = "box">
+  <div id ="container"> 
+     <div id = "chart"> </div>
+    <div id = "right-panel"> 
+   
+
+  <div id="info">  
+    <h3> Helpful Information (Interactions)</h3>
     <p>Hover over any part of the graph to highlight a specific row and column</p>
+    <p>Click a cell to see details below:</p>
+
+    <div id="detail">
+      <p>No cell selected yet.</p>
+    </div>
+    </div>
+ 
+
+
+  <div id="description">
+    <h3> About the Matrix</h3>
+    <p> This matrix shows genre to genre relationships. The darker blues 
+      indicate that the two genres are frequently cited together, while 
+      a lighter blue indicates that the genres are less frequently identified 
+      together in under one movie. A white cell indicates that there is no data
+      for the specific genre combination. The rows and columns detail each genre. 
+    </p>
   </div>
+  </div>
+  </div>
+  </div>
+
+  </div>
+
+
+
+
+
+
 
   <div id="force-graph">
     <div id="canvas"></div>

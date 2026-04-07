@@ -81,3 +81,49 @@ svg g text.label {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color:#2FBCBC;
 }
+
+#container {
+    display: flex;
+    align-items: flex-start;
+    gap: 15 px;
+}
+
+#chart {
+    width: 900px;
+    background: white;
+    padding: 18px;
+    
+}
+
+#info,
+#description {
+    background: #eaeaea;
+    padding: 15 px;
+    border-radius: 10px;
+}
+
+
+
+#right-panel{
+    background: #ade0e0;;
+    border: 1px solid #2FBCBC;
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    gap: 15px;
+    margin-left: -110px;
+    margin-top: 250px;
+}
+
+#box {
+    /*border: 2px solid #2FBCBC; 
+    border-radius: 20px;*/
+    padding: 24px;
+    width: fit-content;
+    margin: 1;
+    gap: 15px;
+    
+}
+
