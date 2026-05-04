@@ -41,7 +41,7 @@ function drawMatrix(matrixData, genres){
     const svg = d3.select("#chart")
         .append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
     const maxValue = d3.max(matrixData, d => d.value);
 
     
@@ -112,8 +112,7 @@ svg.selectAll("rect.cell")
         .attr("x", width/2)
         .attr("y", 30)
         .attr("text-anchor", "middle")
-        .style("font-size", "22px")
-        .style("font-weight", "bold")
+        .attr("class", "matrix-title")
         .text("Genre Co-Occurence Matrix");
 }
 
@@ -176,7 +175,7 @@ function drawGraph(data) {
     // canvas and plot 
     const canvas = d3.select("#canvas")
         .append("svg")
-        .style("background", "#FBFBF9")
+        .style("background", "#FFFFFF")
         .attr("height", height)
         .attr("width", width);
 
@@ -197,8 +196,8 @@ function drawGraph(data) {
             .attr("cx", d => d.x = Math.max(10, Math.min(plot_width - 10, d.x)))
             .attr("cy", d => d.y = Math.max(10, Math.min(plot_height - 10, d.y)))
             .attr("r", 10)
-            .style("fill", "#FFFBB3")
-            .style("stroke", "#FDE49F")
+            .style("fill", "#DEEBF7")
+            .style("stroke", "#9ECAE1")
             .attr("class", "viz");
     }
 
@@ -215,7 +214,7 @@ function drawGraph(data) {
             .attr("y1", d => d.source.y)
             .attr("x2", d => d.target.x)
             .attr("y2", d => d.target.y)
-            .style("stroke", "#2FBCBC")
+            .style("stroke", "#1F456E")
             .style("stroke-width", 2)
     }
 

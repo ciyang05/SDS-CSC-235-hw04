@@ -3,6 +3,9 @@
 In order to receive a regrade on this submission you **must** fully answer the following. Incomplete or missing answers will result in no regrade. 
 
 ## 1. Clearly list all changes you made from your last submission to this submission.
+Aesthetic Purposes
+- Made sure all the text was in the same font 
+- Made sure the color palette was aesthetically pleasing
 
 
 
